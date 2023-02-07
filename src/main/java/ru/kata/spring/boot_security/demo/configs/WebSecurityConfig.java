@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/login").permitAll()
 
+
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
                 .and()
@@ -58,6 +59,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutSuccessUrl("/login")
                 .and().csrf().disable();
+        //настройка логина
+        http
+                .formLogin().loginPage("/login")
+                .successHandler(successUserHandler)
+                .loginProcessingUrl("/process_login")
+                .usernameParameter("username")
+                .passwordParameter("password");
+
     }
 
     @Bean
